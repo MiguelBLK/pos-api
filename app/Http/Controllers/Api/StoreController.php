@@ -12,12 +12,35 @@ use Illuminate\Http\JsonResponse;
 class StoreController extends Controller
 {
     // 
-    public function index() {}
+    public function index() {
+
+        $data = [];
+
+        $storeTypes = Store::all();
+
+        if ($storeTypes->isEmpty()) {
+            $data = [
+                'message' => 'No se encontraron registros',
+                'status' => 400,
+                'result' => [],
+            ];
+
+            return response()->json( $data, 200);
+
+        }
+
+        $data = [
+            
+            'message' => 'Petición exitosa',
+            'status' => 200,
+            'result' => $storeTypes
+        ];
+
+        return response()->json( $data, 200);
+    }
 
     public function create(Request $request)
     {
-
-        // echo phpinfo();
 
         
         $employeeNumber = $request->input('employee_number');
@@ -79,15 +102,15 @@ class StoreController extends Controller
                 'status' => 500
             ];
 
-            return response()->json($data, 400);
+            return response()->json($data, 500);
         }
 
         $data = [
             'result' => $store,
             'message' => 'Tienda creada con exito',
-            'statur' => 201
+            'status' => 200
         ];
 
-        return response()->json($data, 201);
+        return response()->json($data, 200);
     }
 }

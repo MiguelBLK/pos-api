@@ -11,7 +11,7 @@ class StoreTypes extends Model
 
     protected $table = 'store_types';
 
-    protected $primaryKey = 'id_store_types';
+    protected $primaryKey = 'id_store_type';
 
     protected $fillable = [
         'name',
