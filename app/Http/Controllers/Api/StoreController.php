@@ -5,9 +5,12 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Employees;
 use App\Models\Store;
+use App\Models\Folios;
 use Illuminate\Http\Request;
 use App\Validators\StoreValidator;
 use Illuminate\Http\JsonResponse;
+use App\Mail\SendMailController;
+use Illuminate\Support\Facades\Mail;
 
 class StoreController extends Controller
 {
@@ -42,6 +45,7 @@ class StoreController extends Controller
     public function create(Request $request)
     {
 
+        $employeeId = null;
         
         $employeeNumber = $request->input('employee_number');
         $employeeName = $request->input('employee_name');
@@ -64,13 +68,19 @@ class StoreController extends Controller
                 $employee = Employees::create([
                     'name' => $employeeName,
                     'employee_number' => $employeeNumber
+                    
                 ]);
         
                 $employeeId = $employee->id_employee;
             }
-
             
         }
+
+        $folio = Folios::Create([
+            'folio' => folioGenerator()
+        ]);
+
+        $folioId = $folio->id_folio;
 
         $validator = new StoreValidator($request);
         $validationResult = $validator->validate();
@@ -94,6 +104,7 @@ class StoreController extends Controller
             'id_status' => Store::STATUS_PENDING,
             'id_store_type' => $request->id_store_type,
             'id_employee' => $employeeId ?? null,
+            'id_folio' => $folioId,
         ]);
 
         if (!$store) {
@@ -111,6 +122,26 @@ class StoreController extends Controller
             'status' => 200
         ];
 
+        // Mail::to('mangeldk6439@gmail.com')->send(new SendMailController());
+
+
         return response()->json($data, 200);
     }
+    
+}
+
+function folioGenerator() {
+    // Obtener el último folio de la base de datos
+    $lastFolio = Folios::orderBy('folio', 'desc')->first()->folio;
+
+    // Si no existe un registro, iniciar en 1
+    if (!$lastFolio) {
+        $lastFolio = 0;
+    }
+
+    // Incrementar el folio y guardarlo en la base de datos
+    $newFolio = $lastFolio + 1;
+    $folioFormated = str_pad($newFolio, 6, '0', STR_PAD_LEFT);
+
+    return $folioFormated;
 }

@@ -29,6 +29,7 @@ class Store extends Model
         'seller_name',
         'id_status',
         'id_store_type',
-        'id_employee'
+        'id_employee',
+        'id_folio'
     ];
 }

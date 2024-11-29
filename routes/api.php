@@ -10,13 +10,13 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/store-type', [StoreTypeController::class, 'index']);
-Route::post('/store-type', [StoreTypeController::class, 'create']);
+Route::post('/store-type/create', [StoreTypeController::class, 'create']);
 
 Route::get('/store', [StoreController::class, 'index']);
-Route::post('/store', [StoreController::class, 'create']);
+Route::post('/store/create', [StoreController::class, 'create']);
 
 Route::get('/statuses', [StatusesController::class, 'index']);
-Route::post('/statuses', [StatusesController::class, 'create']);
+Route::post('/statuses/create', [StatusesController::class, 'create']);
 
 Route::get('/employees', [EmployeeController::class, 'index']);
-Route::post('/employees', [EmployeeController::class, 'create']);
+Route::post('/employees/create', [EmployeeController::class, 'create']);

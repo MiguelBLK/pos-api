@@ -49,7 +49,8 @@ class EmployeeController extends Controller
 
         $employees = Employees::create([
             'name' => $request->name,
-            'employee_number' => $request->employee_number
+            'employee_number' => $request->employee_number,
+            'email' => $request->email,
         ]);
 
         if (!$employees) {
