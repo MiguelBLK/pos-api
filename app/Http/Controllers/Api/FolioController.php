@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Folio;
+use App\Models\Folios;
 use App\Validators\FolioValidator;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
@@ -33,7 +33,7 @@ class FolioController extends Controller
             return $validationResult;
         }
 
-        $folio = Folio::create([
+        $folio = Folios::create([
             'folio' => $request->folio,
         ]);
 
